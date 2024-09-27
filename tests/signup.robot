@@ -1,8 +1,9 @@
 *** Settings ***
 Documentation        Cenários de testes de cadastro de usuários
 
-Library              Browser
-Library              FakerLibrary    
+Library              FakerLibrary
+
+Resource             ../resources/base.robot
 
 *** Test Cases ***
 Deve poder cadastrar um novo usuário
@@ -10,8 +11,8 @@ Deve poder cadastrar um novo usuário
     ${email}        FakerLibrary.Free Email
     ${password}     Set Variable      pwd123
 
-    New Browser                browser=chromium        headless=False
-    New Page                   http://localhost:3000/signup
+    Start Session
+    Go To           http://localhost:3000/signup
 
     # Checkpoint
     Wait For Elements State    css=h1    visible      5
@@ -25,4 +26,3 @@ Deve poder cadastrar um novo usuário
 
     Wait For Elements State    css=.notice p    visible    5
     Get Text                   css=.notice p    equal    Boas vindas ao Mark85, o seu gerenciador de tarefas.    
-    Sleep    5
